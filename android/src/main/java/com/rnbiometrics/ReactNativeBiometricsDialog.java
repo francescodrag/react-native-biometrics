@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.rnbiometrics.R;
 
 /**
- * Created by brandon on 4/6/18.
+ * Created by francescodrag on 3/09/2020.
  */
 
 @TargetApi(Build.VERSION_CODES.M)
@@ -32,7 +32,8 @@ public class ReactNativeBiometricsDialog extends DialogFragment implements React
     protected Activity activity;
     protected Button cancelButton;
 
-    public void init(String title, FingerprintManager.CryptoObject cryptoObject, ReactNativeBiometricsCallback callback) {
+    public void init(String title, FingerprintManager.CryptoObject cryptoObject,
+            ReactNativeBiometricsCallback callback) {
         this.title = title;
         this.cryptoObject = cryptoObject;
         this.biometricAuthCallback = callback;
@@ -62,9 +63,7 @@ public class ReactNativeBiometricsDialog extends DialogFragment implements React
         biometricAuthenticationHelper = new ReactNativeBiometricsHelper(
                 activity.getSystemService(FingerprintManager.class),
                 (ImageView) view.findViewById(R.id.fingerprint_icon),
-                (TextView) view.findViewById(R.id.fingerprint_status),
-                this
-        );
+                (TextView) view.findViewById(R.id.fingerprint_status), this);
 
         return view;
     }

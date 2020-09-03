@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by brandon on 4/5/18.
+ * Created by francescodrag on 3/09/2020.
  */
 
 public class ReactNativeBiometricsPackage implements ReactPackage {
@@ -20,8 +20,7 @@ public class ReactNativeBiometricsPackage implements ReactPackage {
     }
 
     @Override
-    public List<NativeModule> createNativeModules(
-            ReactApplicationContext reactContext) {
+    public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
 
         modules.add(new ReactNativeBiometrics(reactContext));

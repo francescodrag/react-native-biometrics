@@ -3,7 +3,7 @@ package com.rnbiometrics;
 import android.hardware.fingerprint.FingerprintManager;
 
 /**
- * Created by brandon on 4/9/18.
+ * Created by francescodrag on 3/09/2020.
  */
 
 public interface ReactNativeBiometricsCallback {

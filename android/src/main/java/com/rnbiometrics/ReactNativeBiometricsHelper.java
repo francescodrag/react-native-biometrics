@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.rnbiometrics.R;
 
 /**
- * Created by brandon on 4/5/18.
+ * Created by francescodrag on 3/09/2020.
  */
 
 @TargetApi(Build.VERSION_CODES.M)
@@ -26,8 +26,8 @@ public class ReactNativeBiometricsHelper extends FingerprintManager.Authenticati
 
     private boolean selfCancelled;
 
-    ReactNativeBiometricsHelper(FingerprintManager fingerprintManager, ImageView icon,
-                                  TextView errorTextView, ReactNativeBiometricsCallback callback) {
+    ReactNativeBiometricsHelper(FingerprintManager fingerprintManager, ImageView icon, TextView errorTextView,
+            ReactNativeBiometricsCallback callback) {
         this.fingerprintManager = fingerprintManager;
         this.icon = icon;
         this.errorTextView = errorTextView;
@@ -38,8 +38,7 @@ public class ReactNativeBiometricsHelper extends FingerprintManager.Authenticati
         selfCancelled = false;
 
         cancellationSignal = new CancellationSignal();
-        fingerprintManager
-                .authenticate(cryptoObject, cancellationSignal, 0 /* flags */, this, null);
+        fingerprintManager.authenticate(cryptoObject, cancellationSignal, 0 /* flags */, this, null);
         icon.setImageResource(R.drawable.ic_fp_40px);
     }
 
@@ -99,8 +98,7 @@ public class ReactNativeBiometricsHelper extends FingerprintManager.Authenticati
     private Runnable resetErrorTextRunnable = new Runnable() {
         @Override
         public void run() {
-            errorTextView.setTextColor(
-                    errorTextView.getResources().getColor(R.color.hint_color, null));
+            errorTextView.setTextColor(errorTextView.getResources().getColor(R.color.hint_color, null));
             errorTextView.setText(errorTextView.getResources().getString(R.string.fingerprint_hint));
             icon.setImageResource(R.drawable.ic_fp_40px);
         }
