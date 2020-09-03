@@ -1,7 +1,7 @@
 <resources>
-    <string name="fingerprint_cancel">Cancel</string>
-    <string name="fingerprint_message">Confirm fingerprint to continue</string>
+    <string name="fingerprint_cancel">Annulla</string>
+    <string name="fingerprint_message">Utilizza l\'impronta per confermare l\'identità</string>
     <string name="fingerprint_hint">Tocca il sensore</string>
-    <string name="fingerprint_recognized">Fingerprint recognized</string>
-    <string name="fingerprint_not_recognized">Fingerprint not recognized. Try again</string>
+    <string name="fingerprint_recognized">Impronta riconosciuta</string>
+    <string name="fingerprint_not_recognized">Impronta non riconosciuta. Prova di nuovo</string>
 </resources>

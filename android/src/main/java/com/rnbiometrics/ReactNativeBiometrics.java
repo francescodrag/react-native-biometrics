@@ -10,6 +10,7 @@ import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -140,12 +141,25 @@ public class ReactNativeBiometrics extends ReactContextBaseJavaModule {
     @ReactMethod
     public void simplePrompt(final ReadableMap params, Promise promise) {
         try {
-            String cancelButtomText = params.getString("cancelButtonText");
-            String promptMessage = params.getString("promptMessage");
+            String promptMessage = "Conferma identità";
+            if (params.hasKey("promptMessage")) {
+                promptMessage = params.getString("promptMessage");
+            }
+            String descriptionMessage = "Utilizza l'impronta per confermare l'identità";
+            if (params.hasKey("descriptionMessage")) {
+                descriptionMessage = params.getString("descriptionMessage");
+            }
+            String cancelButtomText = "Annulla";
+            if (params.hasKey("cancelButtonText")) {
+                cancelButtomText = params.getString("cancelButtonText");
+            }
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 ReactNativeBiometricsDialog dialog = new ReactNativeBiometricsDialog();
-                dialog.init(promptMessage, null, getSimplePromptCallback(promise));
+                dialog.init(promptMessage, descriptionMessage, cancelButtomText, null,
+                        getSimplePromptCallback(promise));
                 Activity activity = getCurrentActivity();
+                assert activity != null;
                 dialog.show(activity.getFragmentManager(), "fingerprint_dialog");
             } else {
                 promise.reject("Cannot display biometric prompt on android versions below 6.0",

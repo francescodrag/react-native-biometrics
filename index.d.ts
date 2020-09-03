@@ -9,7 +9,8 @@ declare module 'react-native-biometrics' {
   const FaceID: string;
 
   interface SimplePromptOptions {
-    promptMessage: string
+    promptMessage: string,
+    descriptionMessage?: string,
     cancelButtonText?: string
   }
 
@@ -50,6 +51,7 @@ declare module 'react-native-biometrics' {
     * object.success = false if the user cancels, and rejects if anything fails
     * @param {Object} simplePromptOptions
     * @param {string} simplePromptOptions.promptMessage
+    * @param {string} simplePromptOptions.descriptionMessage (Android only)
     * @param {string} simplePromptOptions.cancelButtonText (Android only)
   * @returns {Promise}  Promise that resolves if the user passes, and
   * rejects if the user fails or cancels
