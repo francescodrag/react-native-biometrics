@@ -3,7 +3,7 @@
   "version": "1.6.1",
   "summary": "A React Native library for biometrics",
   "description": "React Native biometric functionality for signing and encryption",
-  "main": "lib/index.js",
+  "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
     "clean": "rm -rf lib && rm -rf node_modules && npm install",
@@ -21,23 +21,23 @@
     "touch-id",
     "face-id"
   ],
-  "homepage": "https://github.com/SelfLender/react-native-biometrics",
+  "homepage": "https://github.com/francescodrag/react-native-biometrics",
   "contributors": [],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SelfLender/react-native-biometrics.git"
+    "url": "git+https://github.com/francescodrag/react-native-biometrics.git"
   },
   "private": false,
   "author": {
-    "name": "Brandon Hines",
-    "url": "https://github.com/NappyPirate"
+    "name": "Francesco Dragone",
+    "url": "https://github.com/francescodrag"
   },
   "license": "MIT",
   "peerDependencies": {
     "react-native": ">=0.52.0"
   },
   "bugs": {
-    "url": "https://github.com/SelfLender/react-native-biometrics/issues"
+    "url": "https://github.com/francescodrag/react-native-biometrics/issues"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
