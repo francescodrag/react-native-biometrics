@@ -15,6 +15,7 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableMap;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -137,11 +138,13 @@ public class ReactNativeBiometrics extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void simplePrompt(String title, Promise promise) {
+    public void simplePrompt(final ReadableMap params, Promise promise) {
         try {
+            String cancelButtomText = params.getString("cancelButtonText");
+            String promptMessage = params.getString("promptMessage");
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 ReactNativeBiometricsDialog dialog = new ReactNativeBiometricsDialog();
-                dialog.init(title, null, getSimplePromptCallback(promise));
+                dialog.init(promptMessage, null, getSimplePromptCallback(promise));
                 Activity activity = getCurrentActivity();
                 dialog.show(activity.getFragmentManager(), "fingerprint_dialog");
             } else {

@@ -7,6 +7,7 @@
 #import "ReactNativeBiometrics.h"
 #import <LocalAuthentication/LocalAuthentication.h>
 #import <Security/Security.h>
+#import <React/RCTConvert.h>
 
 @implementation ReactNativeBiometrics
 
@@ -136,8 +137,10 @@ RCT_EXPORT_METHOD(createSignature: (NSString *)promptMessage payload:(NSString *
   });
 }
 
-RCT_EXPORT_METHOD(simplePrompt: (NSString *)promptMessage resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+RCT_EXPORT_METHOD(simplePrompt: (NSDictionary *)params resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
   dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    NSString *promptMessage = [RCTConvert NSString:params[@"promptMessage"]];
+    
     LAContext *context = [[LAContext alloc] init];
     context.localizedFallbackTitle = @"";
 
