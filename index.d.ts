@@ -8,11 +8,13 @@ declare module 'react-native-biometrics' {
    */
   const FaceID: string;
 
+  type IsPromptVisible = "true" | "false"
+
   interface SimplePromptOptions {
     promptMessage: string,
     descriptionMessage?: string,
     cancelButtonText?: string,
-    isPromptVisible: string,
+    isPromptVisible: IsPromptVisible,
   }
 
   /**
