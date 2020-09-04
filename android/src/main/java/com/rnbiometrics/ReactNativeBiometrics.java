@@ -12,6 +12,8 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
+
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -25,6 +27,7 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Signature;
 import java.security.spec.RSAKeyGenParameterSpec;
+import java.util.Objects;
 
 /**
  * Created by francescodrag on 3/09/2020.
@@ -138,6 +141,7 @@ public class ReactNativeBiometrics extends ReactContextBaseJavaModule {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @ReactMethod
     public void simplePrompt(final ReadableMap params, Promise promise) {
         try {
@@ -153,10 +157,13 @@ public class ReactNativeBiometrics extends ReactContextBaseJavaModule {
             if (params.hasKey("cancelButtonText")) {
                 cancelButtomText = params.getString("cancelButtonText");
             }
-
+            boolean promptVisible = true;
+            if (params.hasKey("isPromptVisible")) {
+                promptVisible = Boolean.parseBoolean(Objects.requireNonNull(params.getString("isPromptVisible")));
+            }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 ReactNativeBiometricsDialog dialog = new ReactNativeBiometricsDialog();
-                dialog.init(promptMessage, descriptionMessage, cancelButtomText, null,
+                dialog.init(promptMessage, descriptionMessage, cancelButtomText, promptVisible, null,
                         getSimplePromptCallback(promise));
                 Activity activity = getCurrentActivity();
                 assert activity != null;

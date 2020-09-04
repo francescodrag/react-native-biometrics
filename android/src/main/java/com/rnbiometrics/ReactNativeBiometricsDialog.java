@@ -8,14 +8,14 @@ import android.content.DialogInterface;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.rnbiometrics.R;
 
 /**
  * Created by francescodrag on 3/09/2020.
@@ -27,6 +27,7 @@ public class ReactNativeBiometricsDialog extends DialogFragment implements React
     protected String title;
     protected String cancel;
     protected String description;
+    protected boolean promptVisible;
     protected FingerprintManager.CryptoObject cryptoObject;
     protected ReactNativeBiometricsCallback biometricAuthCallback;
 
@@ -42,11 +43,13 @@ public class ReactNativeBiometricsDialog extends DialogFragment implements React
         this.biometricAuthCallback = callback;
     }
 
-    public void init(String title, String description, String cancel, FingerprintManager.CryptoObject cryptoObject,
-            ReactNativeBiometricsCallback callback) {
+    public void init(String title, String description, String cancel, boolean promptVisible,
+            FingerprintManager.CryptoObject cryptoObject, ReactNativeBiometricsCallback callback) {
+        Log.e("DEBUG:: init", Boolean.toString(promptVisible));
         this.title = title;
         this.description = description;
         this.cancel = cancel;
+        this.promptVisible = promptVisible;
         this.cryptoObject = cryptoObject;
         this.biometricAuthCallback = callback;
     }
@@ -54,34 +57,45 @@ public class ReactNativeBiometricsDialog extends DialogFragment implements React
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.BiometricsDialog);
+        if (promptVisible) {
+            Log.e("DEBUG:: style", "visible");
+            setStyle(DialogFragment.STYLE_NORMAL, R.style.BiometricsDialog);
+        } else {
+            Log.e("DEBUG:: style", "invisible");
+            setStyle(DialogFragment.STYLE_NO_INPUT, 0);
+        }
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        getDialog().setTitle(title);
-        View view = inflater.inflate(R.layout.fingerprint_dialog_container, container, false);
-        cancelButton = (Button) view.findViewById(R.id.cancel_button);
-        cancelButton.setText(cancel);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismissAllowingStateLoss();
-                onCancel();
-            }
-        });
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (promptVisible) {
+            getDialog().setTitle(title);
+            View view = inflater.inflate(R.layout.fingerprint_dialog_container, container, false);
+            cancelButton = (Button) view.findViewById(R.id.cancel_button);
+            cancelButton.setText(cancel);
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dismissAllowingStateLoss();
+                    onCancel();
+                }
+            });
 
-        // promptDescription = (TextView)
-        // view.findViewById(R.id.fingerprint_description);
-        // promptDescription.setText(description);
+            promptDescription = (TextView) view.findViewById(R.id.fingerprint_description);
+            promptDescription.setText(description);
 
-        biometricAuthenticationHelper = new ReactNativeBiometricsHelper(
-                activity.getSystemService(FingerprintManager.class),
-                (ImageView) view.findViewById(R.id.fingerprint_icon),
-                (TextView) view.findViewById(R.id.fingerprint_status), this);
+            biometricAuthenticationHelper = new ReactNativeBiometricsHelper(
+                    activity.getSystemService(FingerprintManager.class),
+                    (ImageView) view.findViewById(R.id.fingerprint_icon),
+                    (TextView) view.findViewById(R.id.fingerprint_status), this);
 
-        return view;
+            return view;
+        } else {
+            View view = inflater.inflate(R.layout.transparent_dialog, container, false);
+            biometricAuthenticationHelper = new ReactNativeBiometricsHelper(
+                    activity.getSystemService(FingerprintManager.class), this);
+            return view;
+        }
     }
 
     // DialogFragment lifecycle methods

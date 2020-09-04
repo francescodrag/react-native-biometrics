@@ -53,6 +53,7 @@ declare module 'react-native-biometrics' {
     * @param {string} simplePromptOptions.promptMessage
     * @param {string} simplePromptOptions.descriptionMessage (Android only)
     * @param {string} simplePromptOptions.cancelButtonText (Android only)
+    * @param {string} simplePromptOptions.isPromptVisible (Android only)
   * @returns {Promise}  Promise that resolves if the user passes, and
   * rejects if the user fails or cancels
   */
