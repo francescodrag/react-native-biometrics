@@ -11,7 +11,8 @@ declare module 'react-native-biometrics' {
   interface SimplePromptOptions {
     promptMessage: string,
     descriptionMessage?: string,
-    cancelButtonText?: string
+    cancelButtonText?: string,
+    isPromptVisible: string,
   }
 
   /**
