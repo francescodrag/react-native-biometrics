@@ -109,6 +109,8 @@ public class ReactNativeBiometricsDialog extends DialogFragment implements React
     public void onPause() {
         super.onPause();
         biometricAuthenticationHelper.stopListening();
+        dismissAllowingStateLoss();
+        onCancel();
     }
 
     @Override
@@ -132,7 +134,6 @@ public class ReactNativeBiometricsDialog extends DialogFragment implements React
         }
     }
 
-    @Override
     public void onCancel() {
         if (biometricAuthCallback != null) {
             biometricAuthCallback.onCancel();
